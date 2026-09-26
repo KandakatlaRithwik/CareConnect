@@ -1,0 +1,10 @@
+"use strict";
+const router = require("express").Router();
+const ctrl   = require("../controllers/review.controller");
+const { protect, restrictTo } = require("../middleware/auth.middleware");
+const { reviewValidator } = require("../validators/review.validator");
+const validate = require("../middleware/validate.middleware");
+router.use(protect);
+router.post("/",                      restrictTo("FamilyMember"), reviewValidator, validate, ctrl.createReview);
+router.get("/caregiver/:caregiverId", ctrl.getCaregiverReviews);
+module.exports = router;

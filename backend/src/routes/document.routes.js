@@ -1,0 +1,10 @@
+"use strict";
+const router = require("express").Router();
+const ctrl   = require("../controllers/document.controller");
+const { protect } = require("../middleware/auth.middleware");
+const { documentUpload } = require("../config/cloudinary");
+router.use(protect);
+router.post("/",     documentUpload.single("document"), ctrl.uploadDocument);
+router.get("/",      ctrl.getDocuments);
+router.delete("/:id",ctrl.deleteDocument);
+module.exports = router;

@@ -1,0 +1,13 @@
+"use strict";
+const router = require("express").Router();
+const ctrl   = require("../controllers/booking.controller");
+const { protect, restrictTo } = require("../middleware/auth.middleware");
+const { bookingValidator, bookingStatusValidator } = require("../validators/booking.validator");
+const validate = require("../middleware/validate.middleware");
+router.use(protect);
+router.post("/",        restrictTo("FamilyMember"), bookingValidator, validate, ctrl.createBooking);
+router.get("/",         ctrl.getBookings);
+router.get("/:id",      ctrl.getBooking);
+router.patch("/status", bookingStatusValidator, validate, ctrl.updateBookingStatus);
+router.delete("/:id",   restrictTo("Admin"), ctrl.deleteBooking);
+module.exports = router;

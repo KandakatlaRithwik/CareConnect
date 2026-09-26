@@ -1,0 +1,10 @@
+"use strict";
+const router = require("express").Router();
+const ctrl   = require("../controllers/careNote.controller");
+const { protect, restrictTo } = require("../middleware/auth.middleware");
+router.use(protect);
+router.post("/",    restrictTo("Caregiver"), ctrl.createCareNote);
+router.get("/",     ctrl.getCareNotes);
+router.get("/:id",  ctrl.getCareNote);
+router.put("/:id",  restrictTo("Caregiver"), ctrl.updateCareNote);
+module.exports = router;

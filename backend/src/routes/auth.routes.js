@@ -1,0 +1,14 @@
+"use strict";
+const router = require("express").Router();
+const ctrl   = require("../controllers/auth.controller");
+const validate = require("../middleware/validate.middleware");
+const { protect } = require("../middleware/auth.middleware");
+const { registerValidator, loginValidator, forgotPasswordValidator, resetPasswordValidator, changePasswordValidator } = require("../validators/auth.validator");
+router.post("/register",        registerValidator,       validate, ctrl.register);
+router.post("/login",           loginValidator,          validate, ctrl.login);
+router.post("/logout",          protect,                          ctrl.logout);
+router.post("/refresh-token",                                     ctrl.refreshToken);
+router.post("/forgot-password", forgotPasswordValidator, validate, ctrl.forgotPassword);
+router.post("/reset-password",  resetPasswordValidator,  validate, ctrl.resetPassword);
+router.patch("/change-password",protect, changePasswordValidator, validate, ctrl.changePassword);
+module.exports = router;

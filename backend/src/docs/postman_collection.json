@@ -1,0 +1,85 @@
+{
+  "info": {
+    "name": "Elderly Healthcare Platform API v1",
+    "description": "Complete production API collection — Elderly Nursing & Healthcare Assistance Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "BASE_URL",      "value": "http://localhost:5000/api/v1" },
+    { "key": "ACCESS_TOKEN",  "value": "" },
+    { "key": "REFRESH_TOKEN", "value": "" }
+  ],
+  "item": [
+    { "name": "🔐 Auth", "item": [
+      { "name": "Register", "request": { "method": "POST", "url": "{{BASE_URL}}/auth/register", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"Test@1234\",\n  \"phone\": \"9876543210\",\n  \"role\": \"FamilyMember\"\n}" } } },
+      { "name": "Login", "request": { "method": "POST", "url": "{{BASE_URL}}/auth/login", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"Test@1234\"\n}" } } },
+      { "name": "Logout", "request": { "method": "POST", "url": "{{BASE_URL}}/auth/logout", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } },
+      { "name": "Refresh Token", "request": { "method": "POST", "url": "{{BASE_URL}}/auth/refresh-token", "body": { "mode": "raw", "raw": "{\"refreshToken\":\"{{REFRESH_TOKEN}}\"}" } } },
+      { "name": "Forgot Password", "request": { "method": "POST", "url": "{{BASE_URL}}/auth/forgot-password", "body": { "mode": "raw", "raw": "{\"email\":\"john@example.com\"}" } } },
+      { "name": "Reset Password", "request": { "method": "POST", "url": "{{BASE_URL}}/auth/reset-password", "body": { "mode": "raw", "raw": "{\"token\":\"RESET_TOKEN\",\"password\":\"NewTest@5678\"}" } } },
+      { "name": "Change Password", "request": { "method": "PATCH", "url": "{{BASE_URL}}/auth/change-password", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": { "mode": "raw", "raw": "{\"currentPassword\":\"Test@1234\",\"newPassword\":\"NewTest@5678\"}" } } }
+    ]},
+    { "name": "👤 Users", "item": [
+      { "name": "Get Profile", "request": { "method": "GET", "url": "{{BASE_URL}}/users/profile", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } },
+      { "name": "Update Profile", "request": { "method": "PUT", "url": "{{BASE_URL}}/users/profile", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": { "mode": "raw", "raw": "{\"name\":\"John Updated\",\"city\":\"Hyderabad\",\"state\":\"Telangana\"}" } } }
+    ]},
+    { "name": "🧓 Patients", "item": [
+      { "name": "Create Patient", "request": { "method": "POST", "url": "{{BASE_URL}}/patients", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"},{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"patientName\": \"Ramaiah\",\n  \"age\": 72,\n  \"gender\": \"Male\",\n  \"bloodGroup\": \"O+\",\n  \"height\": 168,\n  \"weight\": 65,\n  \"allergies\": [\"Penicillin\"],\n  \"chronicDiseases\": [\"Diabetes\",\"Arthritis\"],\n  \"emergencyContact\": {\"name\":\"John Doe\",\"phone\":\"9876543210\",\"relationship\":\"Son\"},\n  \"doctorName\": \"Dr. Sharma\",\n  \"careRequirements\": [\"Daily medication\",\"Physiotherapy\"]\n}" } } },
+      { "name": "Get All Patients", "request": { "method": "GET", "url": "{{BASE_URL}}/patients", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } },
+      { "name": "Get Patient", "request": { "method": "GET", "url": "{{BASE_URL}}/patients/:id", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } },
+      { "name": "Update Patient", "request": { "method": "PUT", "url": "{{BASE_URL}}/patients/:id", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\"weight\":63}"} } },
+      { "name": "Delete Patient", "request": { "method": "DELETE", "url": "{{BASE_URL}}/patients/:id", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } }
+    ]},
+    { "name": "👩‍⚕️ Caregivers", "item": [
+      { "name": "Create Caregiver Profile", "request": { "method": "POST", "url": "{{BASE_URL}}/caregivers", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"},{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"caregiverType\": \"Nurse\",\n  \"qualifications\": [\"B.Sc Nursing\"],\n  \"certifications\": [\"BLS\"],\n  \"experienceYears\": 5,\n  \"languages\": [\"English\",\"Telugu\"],\n  \"serviceAreas\": [\"Hyderabad\",\"Warangal\"],\n  \"hourlyRate\": 300,\n  \"profileDescription\": \"Experienced elderly care nurse.\",\n  \"availabilitySchedule\": [{\"day\":\"Monday\",\"startTime\":\"08:00\",\"endTime\":\"18:00\",\"isAvailable\":true}]\n}" } } },
+      { "name": "Get Caregivers (Filtered)", "request": { "method": "GET", "url": {"raw":"{{BASE_URL}}/caregivers?caregiverType=Nurse&rating=4&page=1&limit=10","query":[{"key":"caregiverType","value":"Nurse"},{"key":"rating","value":"4"}]}, "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } },
+      { "name": "Get Recommendations", "request": { "method": "GET", "url": "{{BASE_URL}}/caregivers/recommend/:patientId", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } }
+    ]},
+    { "name": "🏥 Services", "item": [
+      { "name": "Create Service (Admin)", "request": { "method": "POST", "url": "{{BASE_URL}}/services", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\n  \"serviceName\":\"Home Nursing Care\",\n  \"description\":\"24/7 professional home nursing.\",\n  \"duration\":8,\n  \"price\":2400,\n  \"requiredQualification\":\"B.Sc Nursing\",\n  \"category\":\"NursingCare\"\n}"} } },
+      { "name": "Get All Services", "request": { "method": "GET", "url": "{{BASE_URL}}/services" } }
+    ]},
+    { "name": "📅 Bookings", "item": [
+      { "name": "Create Booking", "request": { "method": "POST", "url": "{{BASE_URL}}/bookings", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\n  \"patientId\":\"PATIENT_ID\",\n  \"caregiverId\":\"CAREGIVER_ID\",\n  \"serviceId\":\"SERVICE_ID\",\n  \"bookingDate\":\"2025-02-15\",\n  \"startTime\":\"09:00\",\n  \"endTime\":\"17:00\",\n  \"bookingType\":\"Daily\"\n}"} } },
+      { "name": "Get My Bookings", "request": { "method": "GET", "url": "{{BASE_URL}}/bookings", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } },
+      { "name": "Accept Booking (Caregiver)", "request": { "method": "PATCH", "url": "{{BASE_URL}}/bookings/status", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\"bookingId\":\"BOOKING_ID\",\"status\":\"Accepted\"}"} } },
+      { "name": "Complete Booking (Caregiver)", "request": { "method": "PATCH", "url": "{{BASE_URL}}/bookings/status", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\"bookingId\":\"BOOKING_ID\",\"status\":\"Completed\"}"} } }
+    ]},
+    { "name": "📋 Care Notes", "item": [
+      { "name": "Create Care Note", "request": { "method": "POST", "url": "{{BASE_URL}}/care-notes", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\n  \"bookingId\":\"BOOKING_ID\",\n  \"bloodPressure\":\"120/80\",\n  \"sugarLevel\":\"105 mg/dL\",\n  \"temperature\":\"98.6°F\",\n  \"oxygenLevel\":\"98%\",\n  \"notes\":\"Patient stable. Medications administered.\",\n  \"recommendations\":\"Continue exercises.\",\n  \"nextVisitDate\":\"2025-02-16\"\n}"} } },
+      { "name": "Get Care Notes by Patient", "request": { "method": "GET", "url": {"raw":"{{BASE_URL}}/care-notes?patientId=PATIENT_ID","query":[{"key":"patientId","value":"PATIENT_ID"}]}, "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } }
+    ]},
+    { "name": "⚠️ Complaints", "item": [
+      { "name": "Submit Complaint", "request": { "method": "POST", "url": "{{BASE_URL}}/complaints", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\n  \"bookingId\":\"BOOKING_ID\",\n  \"title\":\"Caregiver arrived late\",\n  \"description\":\"The caregiver arrived 2 hours late without informing.\",\n  \"priority\":\"High\"\n}"} } },
+      { "name": "Get Complaints", "request": { "method": "GET", "url": "{{BASE_URL}}/complaints", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } },
+      { "name": "Resolve Complaint (Admin)", "request": { "method": "PUT", "url": "{{BASE_URL}}/complaints/:id", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\"status\":\"Resolved\",\"adminResponse\":\"Issue addressed and resolved.\"}"} } }
+    ]},
+    { "name": "🔔 Notifications", "item": [
+      { "name": "Get Notifications", "request": { "method": "GET", "url": "{{BASE_URL}}/notifications", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } },
+      { "name": "Mark All as Read", "request": { "method": "PATCH", "url": "{{BASE_URL}}/notifications/read", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } }
+    ]},
+    { "name": "⭐ Reviews", "item": [
+      { "name": "Submit Review", "request": { "method": "POST", "url": "{{BASE_URL}}/reviews", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\n  \"bookingId\":\"BOOKING_ID\",\n  \"rating\":5,\n  \"review\":\"Excellent care. Very professional and compassionate.\"\n}"} } },
+      { "name": "Get Caregiver Reviews", "request": { "method": "GET", "url": "{{BASE_URL}}/reviews/caregiver/:caregiverId", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } }
+    ]},
+    { "name": "💊 Medications", "item": [
+      { "name": "Add Medication Reminder", "request": { "method": "POST", "url": "{{BASE_URL}}/medications", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\n  \"patientId\":\"PATIENT_ID\",\n  \"medicineName\":\"Metformin\",\n  \"dosage\":\"500mg\",\n  \"frequency\":\"TwiceDaily\",\n  \"reminderTime\":[\"08:00\",\"20:00\"],\n  \"startDate\":\"2025-01-01\"\n}"} } },
+      { "name": "Get Medications", "request": { "method": "GET", "url": "{{BASE_URL}}/medications", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } }
+    ]},
+    { "name": "🚨 SOS", "item": [
+      { "name": "Trigger SOS Alert", "request": { "method": "POST", "url": "{{BASE_URL}}/sos", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\n  \"patientId\":\"PATIENT_ID\",\n  \"emergencyType\":\"Fall\",\n  \"location\":{\n    \"latitude\":17.385,\n    \"longitude\":78.4867,\n    \"address\":\"123 MG Road, Hyderabad\"\n  }\n}"} } },
+      { "name": "Resolve SOS (Admin)", "request": { "method": "PATCH", "url": "{{BASE_URL}}/sos/:id/resolve", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\"notes\":\"Family contacted. Patient is stable.\"}"} } }
+    ]},
+    { "name": "📁 Documents", "item": [
+      { "name": "Upload Document", "request": { "method": "POST", "url": "{{BASE_URL}}/documents", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"formdata","formdata":[{"key":"document","type":"file","src":""},{"key":"documentType","value":"Prescription","type":"text"},{"key":"title","value":"Dr. Sharma Prescription Jan 2025","type":"text"},{"key":"patientId","value":"PATIENT_ID","type":"text"}]} } },
+      { "name": "Get Documents", "request": { "method": "GET", "url": "{{BASE_URL}}/documents", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } }
+    ]},
+    { "name": "🛠️ Admin", "item": [
+      { "name": "Dashboard Stats", "request": { "method": "GET", "url": "{{BASE_URL}}/admin/dashboard", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } },
+      { "name": "Reports", "request": { "method": "GET", "url": {"raw":"{{BASE_URL}}/admin/reports?from=2025-01-01&to=2025-01-31","query":[{"key":"from","value":"2025-01-01"},{"key":"to","value":"2025-01-31"}]}, "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } },
+      { "name": "Health Risk Assessment", "request": { "method": "GET", "url": {"raw":"{{BASE_URL}}/admin/health-risk?age=72&systolicBP=150&diastolicBP=95&sugarLevel=210&chronicDiseases=Diabetes,Arthritis"}, "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}] } },
+      { "name": "Verify Caregiver", "request": { "method": "PATCH", "url": "{{BASE_URL}}/admin/caregivers/:id/verify", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\"verificationStatus\":\"Verified\"}"} } },
+      { "name": "Update User Status", "request": { "method": "PATCH", "url": "{{BASE_URL}}/admin/users/:id/status", "header": [{"key":"Authorization","value":"Bearer {{ACCESS_TOKEN}}"}], "body": {"mode":"raw","raw":"{\"status\":\"Suspended\"}"} } }
+    ]}
+  ]
+}

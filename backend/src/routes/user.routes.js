@@ -1,0 +1,10 @@
+"use strict";
+const router = require("express").Router();
+const ctrl   = require("../controllers/user.controller");
+const { protect } = require("../middleware/auth.middleware");
+const { profileImageUpload } = require("../config/cloudinary");
+router.use(protect);
+router.get("/profile",    ctrl.getProfile);
+router.put("/profile",    profileImageUpload.single("profileImage"), ctrl.updateProfile);
+router.delete("/profile", ctrl.deleteProfile);
+module.exports = router;

@@ -1,0 +1,11 @@
+"use strict";
+const router = require("express").Router();
+const ctrl   = require("../controllers/service.controller");
+const { protect, restrictTo } = require("../middleware/auth.middleware");
+router.get("/",     ctrl.getServices);
+router.get("/:id",  ctrl.getService);
+router.use(protect, restrictTo("Admin"));
+router.post("/",    ctrl.createService);
+router.put("/:id",  ctrl.updateService);
+router.delete("/:id",ctrl.deleteService);
+module.exports = router;

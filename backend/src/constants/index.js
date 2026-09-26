@@ -1,0 +1,18 @@
+"use strict";
+const ROLES = Object.freeze({ ADMIN:"Admin", FAMILY_MEMBER:"FamilyMember", CAREGIVER:"Caregiver" });
+const USER_STATUS = Object.freeze({ ACTIVE:"Active", INACTIVE:"Inactive", SUSPENDED:"Suspended" });
+const CAREGIVER_TYPES = Object.freeze({ NURSE:"Nurse", PHYSIOTHERAPIST:"Physiotherapist", ATTENDANT:"Attendant", COMPANION_CAREGIVER:"CompanionCaregiver" });
+const VERIFICATION_STATUS = Object.freeze({ PENDING:"Pending", VERIFIED:"Verified", REJECTED:"Rejected" });
+const SERVICE_CATEGORIES = Object.freeze({ NURSING_CARE:"NursingCare", ELDERLY_ATTENDANT:"ElderlyAttendant", PHYSIOTHERAPY:"Physiotherapy", POST_HOSPITAL_CARE:"PostHospitalCare" });
+const BOOKING_TYPES = Object.freeze({ HOURLY:"Hourly", DAILY:"Daily", WEEKLY:"Weekly", MONTHLY:"Monthly" });
+const BOOKING_STATUS = Object.freeze({ PENDING:"Pending", ACCEPTED:"Accepted", REJECTED:"Rejected", IN_PROGRESS:"InProgress", COMPLETED:"Completed", CANCELLED:"Cancelled" });
+const COMPLAINT_PRIORITY = Object.freeze({ LOW:"Low", MEDIUM:"Medium", HIGH:"High" });
+const COMPLAINT_STATUS = Object.freeze({ OPEN:"Open", IN_REVIEW:"InReview", RESOLVED:"Resolved", CLOSED:"Closed" });
+const NOTIFICATION_TYPES = Object.freeze({ BOOKING_REQUEST:"BookingRequest", BOOKING_ACCEPTED:"BookingAccepted", BOOKING_REJECTED:"BookingRejected", SERVICE_COMPLETED:"ServiceCompleted", COMPLAINT_UPDATE:"ComplaintUpdate", SOS_ALERT:"SOSAlert", MEDICATION_REMINDER:"MedicationReminder" });
+const EMERGENCY_TYPES = Object.freeze({ FALL:"Fall", CHEST_PAIN:"ChestPain", BREATHING:"BreathingDifficulty", UNCONSCIOUS:"Unconscious", OTHER:"Other" });
+const HEALTH_RISK = Object.freeze({ LOW:"Low", MEDIUM:"Medium", HIGH:"High" });
+const MEDICATION_FREQUENCY = Object.freeze({ ONCE_DAILY:"OnceDaily", TWICE_DAILY:"TwiceDaily", THRICE_DAILY:"ThriceDaily", WEEKLY:"Weekly", AS_NEEDED:"AsNeeded" });
+const DOCUMENT_TYPES = Object.freeze({ PRESCRIPTION:"Prescription", MEDICAL_REPORT:"MedicalReport", CERTIFICATE:"Certificate", GOVERNMENT_ID:"GovernmentId", POLICE_VERIFICATION:"PoliceVerification" });
+const SOCKET_EVENTS = Object.freeze({ BOOKING_CREATED:"booking-created", BOOKING_ACCEPTED:"booking-accepted", BOOKING_REJECTED:"booking-rejected", CAREGIVER_ARRIVED:"caregiver-arrived", SERVICE_COMPLETED:"service-completed", COMPLAINT_UPDATED:"complaint-updated", SOS_ALERT:"sos-alert", NOTIFICATION:"notification" });
+const BLOOD_GROUPS = ["A+","A-","B+","B-","AB+","AB-","O+","O-"];
+module.exports = { ROLES, USER_STATUS, CAREGIVER_TYPES, VERIFICATION_STATUS, SERVICE_CATEGORIES, BOOKING_TYPES, BOOKING_STATUS, COMPLAINT_PRIORITY, COMPLAINT_STATUS, NOTIFICATION_TYPES, EMERGENCY_TYPES, HEALTH_RISK, MEDICATION_FREQUENCY, DOCUMENT_TYPES, SOCKET_EVENTS, BLOOD_GROUPS };

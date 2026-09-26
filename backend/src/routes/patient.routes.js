@@ -1,0 +1,13 @@
+"use strict";
+const router = require("express").Router();
+const ctrl   = require("../controllers/patient.controller");
+const { protect, restrictTo } = require("../middleware/auth.middleware");
+const { patientValidator } = require("../validators/patient.validator");
+const validate = require("../middleware/validate.middleware");
+router.use(protect);
+router.post("/",     restrictTo("FamilyMember","Admin"), patientValidator, validate, ctrl.createPatient);
+router.get("/",      ctrl.getPatients);
+router.get("/:id",   ctrl.getPatient);
+router.put("/:id",   restrictTo("FamilyMember","Caregiver","Admin"), ctrl.updatePatient);
+router.delete("/:id",restrictTo("FamilyMember","Admin"), ctrl.deletePatient);
+module.exports = router;
